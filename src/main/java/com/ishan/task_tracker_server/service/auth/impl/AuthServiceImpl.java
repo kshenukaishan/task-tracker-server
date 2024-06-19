@@ -47,4 +47,9 @@ public class AuthServiceImpl implements AuthService {
         User createdUser = userRepository.save(user);
         return createdUser.getUserDto();
     }
+
+    @Override
+    public boolean hasUserWithEmail(String email) {
+        return userRepository.findFirstByEmail(email).isPresent();
+    }
 }
