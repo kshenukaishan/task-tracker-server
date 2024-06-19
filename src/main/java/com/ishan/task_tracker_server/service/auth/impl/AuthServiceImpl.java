@@ -1,5 +1,7 @@
 package com.ishan.task_tracker_server.service.auth.impl;
 
+import com.ishan.task_tracker_server.dto.SignUpRequest;
+import com.ishan.task_tracker_server.dto.UserDto;
 import com.ishan.task_tracker_server.entity.User;
 import com.ishan.task_tracker_server.enums.UserRole;
 import com.ishan.task_tracker_server.repository.UserRepository;
@@ -33,5 +35,16 @@ public class AuthServiceImpl implements AuthService {
         } else {
             System.out.println("Admin account already exists!");
         }
+    }
+
+    @Override
+    public UserDto signUpUser(SignUpRequest signUpRequest) {
+        User user = new User();
+        user.setEmail(signUpRequest.getEmail());
+        user.setName(signUpRequest.getName());
+        user.setPassword(new BCryptPasswordEncoder().encode(signUpRequest.getPassword()));
+        user.setUserRole(UserRole.EMPLOYEE);
+        User createdUser = userRepository.save(user);
+        return createdUser.getUserDto();
     }
 }
