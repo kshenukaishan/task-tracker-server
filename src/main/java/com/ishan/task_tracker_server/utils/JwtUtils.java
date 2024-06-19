@@ -29,8 +29,8 @@ public class JwtUtils {
     }
 
     private Key getSigninKey() {
-        byte[] keybytes = Decoders.BASE64.decode("413F4428472B4B6250655368566D597033733676397924422645294848406351");
-        return Keys.hmacShaKeyFor(keybytes);
+        byte[] keyBytes = Decoders.BASE64.decode("413F4428472B4B6250655368566D5970337336763979244226452948404D6351");
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails){
