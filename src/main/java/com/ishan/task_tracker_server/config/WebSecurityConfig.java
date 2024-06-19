@@ -2,8 +2,6 @@ package com.ishan.task_tracker_server.config;
 
 import com.ishan.task_tracker_server.enums.UserRole;
 import com.ishan.task_tracker_server.service.jwt.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,15 +46,15 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    private AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userService.userDetailsService());
-        authProvider.setPasswordEncoder(passworEncoder());
-        return null;
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
     }
 
     @Bean
-    private PasswordEncoder passworEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

@@ -1,8 +1,14 @@
 package com.ishan.task_tracker_server.service.auth.impl;
 
+import com.ishan.task_tracker_server.entity.User;
+import com.ishan.task_tracker_server.enums.UserRole;
 import com.ishan.task_tracker_server.repository.UserRepository;
 import com.ishan.task_tracker_server.service.auth.AuthService;
+import jakarta.annotation.PostConstruct;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -11,5 +17,21 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @PostConstruct
+    public void createAnAdminAccount(){
+        Optional<User> userOptional = userRepository.findByUserRole(UserRole.ADMIN);
+        if(userOptional.isEmpty()){
+            User user = new User();
+            user.setEmail("admin@test.com");
+            user.setName("admin");
+            user.setPassword(new BCryptPasswordEncoder().encode("admin123"));
+            user.setUserRole(UserRole.ADMIN);
+            userRepository.save(user);
+            System.out.println("User created successfully!");
+        } else {
+            System.out.println("Admin account already exists!");
+        }
     }
 }
