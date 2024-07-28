@@ -1,6 +1,6 @@
 package com.ishan.task_tracker_server.services.auth.impl;
 
-import com.ishan.task_tracker_server.dto.SignupRequest;
+import com.ishan.task_tracker_server.dto.request.SignupRequest;
 import com.ishan.task_tracker_server.dto.UserDto;
 import com.ishan.task_tracker_server.entity.User;
 import com.ishan.task_tracker_server.enums.UserRole;
@@ -39,12 +39,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserDto registerUser(SignupRequest request) {
-        User builtUser = User.builder()
-                .email(request.getEmail())
-                .name(request.getName())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .userRole(UserRole.EMPLOYEE)
-                .build();
+        User builtUser = new User();
+        builtUser.setEmail(request.getEmail());
+        builtUser.setName(request.getName());
+        builtUser.setPassword(passwordEncoder.encode(request.getPassword()));
+        builtUser.setUserRole(UserRole.EMPLOYEE);
         User createdUser = userRepository.save(builtUser);
         return createdUser.getUserDto();
     }

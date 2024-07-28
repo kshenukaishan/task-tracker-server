@@ -1,4 +1,4 @@
-package com.ishan.task_tracker_server.dto;
+package com.ishan.task_tracker_server.dto.request;
 
 import lombok.Data;
 
