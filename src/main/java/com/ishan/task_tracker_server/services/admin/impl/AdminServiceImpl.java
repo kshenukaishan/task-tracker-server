@@ -19,9 +19,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<UserDto> getUsers() {
-        return userRepository.findAll()
+        return userRepository
+                .findAll()
                 .stream()
                 .filter(user -> user.getUserRole() == UserRole.EMPLOYEE)
-                .map(User::getUserDto).toList();
+                .map(User::getUserDto)
+                .collect(Collectors.toList());
     }
 }
