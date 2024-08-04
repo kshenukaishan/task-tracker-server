@@ -2,13 +2,13 @@ package com.ishan.task_tracker_server.config;
 
 import com.ishan.task_tracker_server.services.jwt.UserService;
 import com.ishan.task_tracker_server.utils.JwtUtils;
-import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,7 +37,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        if(authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if(StringUtils.isEmpty(authHeader) || StringUtils.startsWith(authHeader, "Bearer")) {
             filterChain.doFilter(request, response);
             return;
         }
