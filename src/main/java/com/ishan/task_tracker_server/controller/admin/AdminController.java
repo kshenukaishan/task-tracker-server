@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/admin")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class AdminController {
 
     private final AdminService adminService;
@@ -45,7 +45,7 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getTaskById(id));
     }
 
-    @PutMapping("/task/{id}")
+    @PutMapping("/task/{id}/edit")
     public ResponseEntity<?> updateTask(@PathVariable Long id, @RequestBody TaskDto taskDto) {
         TaskDto updatedTask = adminService.updateTask(id, taskDto);
         if(updatedTask == null) return ResponseEntity.notFound().build();
